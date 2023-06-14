@@ -9,7 +9,7 @@ sudo yum install -y terraform
 git clone https://github.com/PTP-PeakPlus/aws-sso.git
 cd aws-sso
 terraform init
-terraform apply -auto-approve -var="azure_metadata_url=xxxxxx”
+terraform apply -auto-approve -var="azure_metadata_url=xxxx"
 terraform output aws_iam_access_key
 terraform output aws_iam_access_secret
 ```

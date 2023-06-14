@@ -3,5 +3,6 @@ output "aws_iam_access_key" {
 }
 
 output "aws_iam_access_secret" {
-  value = aws_iam_access_key.ptp_role_manager.secret
+  value     = aws_iam_access_key.ptp_role_manager.secret
+  sensitive = true
 }
