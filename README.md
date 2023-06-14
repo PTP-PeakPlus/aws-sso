@@ -12,4 +12,5 @@ terraform init
 terraform apply -auto-approve -var="azure_metadata_url=xxxx"
 terraform output aws_iam_access_key
 terraform output aws_iam_access_secret
+
 ```

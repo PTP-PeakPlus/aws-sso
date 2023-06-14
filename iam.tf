@@ -134,7 +134,7 @@ resource "aws_iam_user_policy" "ptp_role_manager" {
         ]
         Effect = "Allow"
         Resource = [
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/PTP-*"
+          "*"
         ]
       }
     ]
