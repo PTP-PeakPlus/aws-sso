@@ -11,25 +11,35 @@ resource "aws_iam_saml_provider" "ptp" {
   saml_metadata_document = data.http.ptp_azure.response_body
 }
 
-resource "aws_iam_role" "ptp_admin" {
-  name = "PTP-AdminRole"
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    actions = ["sts:AssumeRole"]
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action = "sts:AssumeRoleWithSAML"
-      Effect = "Allow"
-      Sid    = ""
-      Principal = {
-        Federated = aws_iam_saml_provider.ptp.arn
-      }
-      Condition = {
-        StringEquals = {
-          "SAML:aud" = "https://signin.aws.amazon.com/saml"
-        }
-      }
-    }]
-  })
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::842675975653:root"]
+    }
+  }
+
+  statement {
+    actions = ["sts:AssumeRoleWithSAML"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [aws_iam_saml_provider.ptp.arn]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "SAML:aud"
+      values   = ["https://signin.aws.amazon.com/saml"]
+    }
+  }
+}
+
+resource "aws_iam_role" "ptp_admin" {
+  name               = "PTP-AdminRole"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
 resource "aws_iam_role_policy_attachment" "ptp_admin" {
@@ -38,24 +48,8 @@ resource "aws_iam_role_policy_attachment" "ptp_admin" {
 }
 
 resource "aws_iam_role" "ptp_pu" {
-  name = "PTP-PowerUserRole"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action = "sts:AssumeRoleWithSAML"
-      Effect = "Allow"
-      Sid    = ""
-      Principal = {
-        Federated = aws_iam_saml_provider.ptp.arn
-      }
-      Condition = {
-        StringEquals = {
-          "SAML:aud" = "https://signin.aws.amazon.com/saml"
-        }
-      }
-    }]
-  })
+  name               = "PTP-PowerUserRole"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
 resource "aws_iam_role_policy_attachment" "ptp_pu" {
@@ -64,24 +58,8 @@ resource "aws_iam_role_policy_attachment" "ptp_pu" {
 }
 
 resource "aws_iam_role" "ptp_iam" {
-  name = "PTP-IAMAdminRole"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action = "sts:AssumeRoleWithSAML"
-      Effect = "Allow"
-      Sid    = ""
-      Principal = {
-        Federated = aws_iam_saml_provider.ptp.arn
-      }
-      Condition = {
-        StringEquals = {
-          "SAML:aud" = "https://signin.aws.amazon.com/saml"
-        }
-      }
-    }]
-  })
+  name               = "PTP-IAMAdminRole"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
 resource "aws_iam_role_policy_attachment" "ptp_iam" {
@@ -90,24 +68,8 @@ resource "aws_iam_role_policy_attachment" "ptp_iam" {
 }
 
 resource "aws_iam_role" "ptp_ro" {
-  name = "PTP-ReadOnlyRole"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action = "sts:AssumeRoleWithSAML"
-      Effect = "Allow"
-      Sid    = ""
-      Principal = {
-        Federated = aws_iam_saml_provider.ptp.arn
-      }
-      Condition = {
-        StringEquals = {
-          "SAML:aud" = "https://signin.aws.amazon.com/saml"
-        }
-      }
-    }]
-  })
+  name               = "PTP-ReadOnlyRole"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
 resource "aws_iam_role_policy_attachment" "ptp_ro" {
