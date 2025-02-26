@@ -27,7 +27,7 @@ for role in roles:
 			},
 			"Action": "sts:AssumeRole",
 			"Condition": {
-				"ArnLike": {
+				"StringLike": {
 					"aws:PrincipalArn": "arn:aws:sts::842675975653:assumed-role/AWSReservedSSO_cli-secure-access_*"
 				}
 			}

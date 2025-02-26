@@ -7,3 +7,9 @@ sudo yum install -y yum-utils; sudo yum-config-manager --add-repo https://rpm.re
 ```
 
 Go to AWS SecretsManager to access they key information needed to complete automated user provisisoning in Azure..
+
+To update trust policy...
+
+```
+git clone https://github.com/PTP-PeakPlus/aws-sso.git && python aws-sso/scripts/update-policy.py
+```
