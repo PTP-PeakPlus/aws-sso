@@ -19,7 +19,7 @@ for role in roles:
 
 	trust_policy = response['Role']['AssumeRolePolicyDocument']
 
-	if not find_value_anywhere(trust_policy, "arn:aws:sts::842675975653:assumed-role/AWSReservedSSO_cli-secure-access_*"):
+	if not find_value_anywhere(trust_policy, "arn:aws:iam::842675975653:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_cli-secure-access_*"):
 		trust_policy['Statement'].append({
 			"Effect": "Allow",
 			"Principal": {
@@ -27,8 +27,8 @@ for role in roles:
 			},
 			"Action": "sts:AssumeRole",
 			"Condition": {
-				"StringLike": {
-					"aws:PrincipalArn": "arn:aws:sts::842675975653:assumed-role/AWSReservedSSO_cli-secure-access_*"
+				"ArnLike": {
+					"aws:PrincipalArn": "arn:aws:iam::842675975653:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_cli-secure-access_*"
 				}
 			}
 		})

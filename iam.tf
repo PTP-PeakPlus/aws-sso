@@ -21,9 +21,9 @@ data "aws_iam_policy_document" "assume_role" {
     }
 
     condition {
-      test     = "StringLike"
+      test     = "ArnLike"
       variable = "aws:PrincipalArn"
-      values   = ["arn:aws:sts::842675975653:assumed-role/AWSReservedSSO_cli-secure-access_*"]
+      values   = ["arn:aws:iam::842675975653:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_cli-secure-access_*"]
     }
   }
 

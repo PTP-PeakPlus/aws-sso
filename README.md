@@ -13,3 +13,8 @@ To update trust policy...
 ```
 git clone https://github.com/PTP-PeakPlus/aws-sso.git && python aws-sso/scripts/update-policy.py
 ```
+
+```
+aws sso login --profile ptp-secure-access
+export AWS_PROFILE=`python3 scripts/set-profile.py 164682547053`
+```
