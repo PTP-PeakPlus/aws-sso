@@ -28,6 +28,21 @@ data "aws_iam_policy_document" "assume_role" {
   }
 
   statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::842675975653:root"]
+    }
+
+    condition {
+      test     = "ArnLike"
+      variable = "aws:PrincipalArn"
+      values   = ["arn:aws:iam::842675975653:role/ptp-cross-account-automation"]
+    }
+  }
+
+  statement {
     actions = ["sts:AssumeRoleWithSAML"]
 
     principals {

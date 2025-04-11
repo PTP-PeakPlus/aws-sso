@@ -37,6 +37,28 @@ for role in roles:
 			RoleName=role,
 			PolicyDocument=json.dumps(trust_policy)
 		)
-		print(role + " was updated.")
+		print(role + " was updated for cli-secure-access.")
 	else:
-		print("No update was required for " + role + ".")
+		print("No update was required to " + role + " for cli-secure-access.")
+
+	if not find_value_anywhere(trust_policy, "arn:aws:iam::842675975653:role/ptp-cross-account-automation"):
+		trust_policy['Statement'].append({
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::842675975653:root"
+			},
+			"Action": "sts:AssumeRole",
+			"Condition": {
+				"ArnLike": {
+					"aws:PrincipalArn": "arn:aws:iam::842675975653:role/ptp-cross-account-automation"
+				}
+			}
+		})
+
+		response = iam.update_assume_role_policy(
+			RoleName=role,
+			PolicyDocument=json.dumps(trust_policy)
+		)
+		print(role + " was updated for ptp-cross-account-automation.")
+	else:
+		print("No update was required to " + role + " for ptp-cross-account-automation.")
