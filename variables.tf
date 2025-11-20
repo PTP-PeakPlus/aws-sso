@@ -9,3 +9,9 @@ variable "account_name" {
   type        = string
   default     = ""
 }
+
+variable "notification_identifier" {
+  description = "This is the identifier that will be included with the aws-accounts@ptp.cloud email notification."
+  type        = string
+  default     = ""
+}
